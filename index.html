@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>PROJECT: SUNSET</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="style.css"></head><body>
+<canvas id="c"></canvas>
+<div id="loading" class="screen">Loading…</div>
+
+<div id="menu" class="screen hidden">
+  <h1>PROJECT<b>SUNSET</b></h1><p class="tag">Version 0.1 · the city never sleeps</p>
+  <div class="btns">
+    <button data-act="play">Play</button><button data-act="new">New Game</button>
+    <button data-act="settings">Settings</button><button data-act="controls">Controls</button>
+    <button data-act="credits">Credits</button>
+  </div>
+</div>
+
+<div id="pause" class="screen hidden"><h2>Paused</h2>
+  <div class="btns">
+    <button data-act="resume">Resume</button><button data-act="save">Save Game</button>
+    <button data-act="load">Load Game</button><button data-act="settings">Settings</button>
+    <button data-act="controls">Controls</button><button data-act="reset">Reset Save</button>
+    <button data-act="menu">Main Menu</button>
+  </div>
+</div>
+
+<div id="modal" class="screen hidden">
+  <section class="panel hidden" id="m-settings"><h2>Settings</h2>
+    <label>Look sensitivity <input id="s-sens" type="range" min=".2" max="2" step=".05"></label>
+    <label>Volume <input id="s-vol" type="range" min="0" max="1" step=".05"></label>
+    <label>Graphics <select id="s-q"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select></label>
+    <button data-act="fullscreen">Toggle fullscreen</button><button data-act="close">Back</button>
+  </section>
+  <section class="panel hidden" id="m-controls"><h2>Controls</h2>
+    <p><b>On foot</b><br>W A S D move · Shift sprint · Space jump · Mouse look · Wheel zoom · E interact · Esc pause</p>
+    <p><b>In a car</b><br>W accelerate · S brake / reverse · A D steer · Space handbrake · E exit (when slow) · Mouse look</p>
+    <button data-act="close">Back</button>
+  </section>
+  <section class="panel hidden" id="m-credits"><h2>Credits</h2>
+    <p>PROJECT: SUNSET v0.1<br>All geometry, signs and sounds are generated in code.<br>Rendering by Three.js (r128, MIT licence).</p>
+    <button data-act="close">Back</button>
+  </section>
+</div>
+
+<div id="hud" class="hidden">
+  <div id="tl"><div id="hpbar"><i id="hp"></i></div></div>
+  <div id="tr"><div id="money">$0</div><div id="clock">00:00</div></div>
+  <canvas id="minimap" width="160" height="160"></canvas>
+  <div id="br"><div id="speed"></div><div id="veh">On foot</div></div>
+  <div id="prompt"></div><div id="toast"></div>
+</div>
+
+<!-- Only external dependency: Three.js r128 from cdnjs. Load order matters (all share window.SUNSET). -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="src/settings.js"></script><script src="src/save.js"></script>
+<script src="src/input.js"></script><script src="src/world.js"></script>
+<script src="src/player.js"></script><script src="src/vehicle.js"></script>
+<script src="src/npc.js"></script><script src="src/interaction.js"></script>
+<script src="src/hud.js"></script><script src="src/menu.js"></script>
+<script src="src/game.js"></script>
+</body></html>
