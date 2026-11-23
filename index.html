@@ -4,6 +4,23 @@
 <link rel="stylesheet" href="style.css"></head><body>
 <canvas id="c"></canvas>
 <div id="loading" class="screen">Loading…</div>
+<script>
+(function(){
+  const loading=document.getElementById('loading');
+  function esc(s){return String(s||'Unknown error').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+  window.sunsetReportError=function(title,detail){
+    loading.classList.remove('hidden');
+    loading.innerHTML='<div style="max-width:min(760px,92vw);padding:28px;border:1px solid #ff5577;background:#101018;text-align:left;letter-spacing:normal;line-height:1.5"><h2 style="color:#ff5577;letter-spacing:.08em;margin:0 0 12px">'+esc(title)+'</h2><p style="white-space:pre-wrap;word-break:break-word">'+esc(detail)+'</p><p style="opacity:.7;margin-top:16px">Copy this error and send it to ChatGPT so the game can be fixed.</p></div>';
+  };
+  window.addEventListener('error',function(e){sunsetReportError('GAME STARTUP ERROR',e.message+'\\n'+(e.filename||'')+':'+(e.lineno||'')+':'+(e.colno||''));});
+  window.addEventListener('unhandledrejection',function(e){sunsetReportError('GAME STARTUP ERROR',e.reason&&e.reason.stack||e.reason||'Unhandled promise rejection');});
+  setTimeout(function(){
+    if(!loading.classList.contains('hidden')){
+      sunsetReportError('STARTUP TIMED OUT','The game has not finished loading after 20 seconds. Possible causes: a script failed to load, Three.js CDN is blocked/unavailable, or a startup JavaScript/WebGL error occurred. This diagnostic page will show any caught error.');
+    }
+  },20000);
+})();
+</script>
 
 <div id="menu" class="screen hidden">
   <h1>PROJECT<b>SUNSET</b></h1><p class="tag">Version 0.1 · the city never sleeps</p>
@@ -50,11 +67,11 @@
 </div>
 
 <!-- Only external dependency: Three.js r128 from cdnjs. Load order matters (all share window.SUNSET). -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="src/settings.js"></script><script src="src/save.js"></script>
-<script src="src/input.js"></script><script src="src/world.js"></script>
-<script src="src/player.js"></script><script src="src/vehicle.js"></script>
-<script src="src/npc.js"></script><script src="src/interaction.js"></script>
-<script src="src/hud.js"></script><script src="src/menu.js"></script>
-<script src="src/game.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" onerror="sunsetReportError(&quot;DEPENDENCY FAILED&quot;,&quot;Three.js failed to load from cdnjs. Check internet access or CDN availability.&quot;)"></script>
+<script src="src/settings.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/settings.js&quot;)"></script><script src="src/save.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/save.js&quot;)"></script>
+<script src="src/input.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/input.js&quot;)"></script><script src="src/world.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/world.js&quot;)"></script>
+<script src="src/player.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/player.js&quot;)"></script><script src="src/vehicle.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/vehicle.js&quot;)"></script>
+<script src="src/npc.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/npc.js&quot;)"></script><script src="src/interaction.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/interaction.js&quot;)"></script>
+<script src="src/hud.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/hud.js&quot;)"></script><script src="src/menu.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/menu.js&quot;)"></script>
+<script src="src/game.js" onerror="sunsetReportError(&quot;SCRIPT FAILED&quot;,&quot;Could not load src/game.js&quot;)"></script>
 </body></html>
